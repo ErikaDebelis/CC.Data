@@ -17,6 +17,9 @@ namespace CC.Data.Identity
         { }
 
         public DbSet<Identity> Identities { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<PronounChoice> PronounChoices { get; set; }
+
         private Dictionary<string, Guid> _Ids;
 
         #region OnModelCreating
@@ -52,9 +55,53 @@ namespace CC.Data.Identity
                 ModifiedOn = DateTime.UtcNow
             };
 
+            var testProfile = new Profile()
+            {
+                Id = _Ids["ProfileId"],
+                IdentityId = testIdentity.Id,
+                Name = "Test Profile",
+                FirstName = "Test",
+                MiddleName = "Testing",
+                LastName = "Person",
+                Title = Identity.Models.Title.Dr,
+                Gender = Identity.Models.Gender.Male,
+                CreatedBy = "Test",
+                ModifiedBy = "Test",
+                CreatedOn = DateTime.UtcNow,
+                ModifiedOn = DateTime.UtcNow
+            };
+
+            var testPronounChoices = new List<PronounChoice>()
+            {
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice1Id"],
+                    Pronoun = Pronoun.He,
+                    CreatedBy = "Test",
+                    ModifiedBy = "Test",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                },
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice2Id"],
+                    Pronoun = Pronoun.Him,
+                    CreatedBy = "Test",
+                    ModifiedBy = "Test",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                }
+            };
+
             // Now seed the data into the database
             modelBuilder.Entity<Models.Identity>()
                 .HasData(testIdentity);
+            
+            modelBuilder.Entity<Profile>()
+                .HasData(testProfile);
+            
+            modelBuilder.Entity<PronounChoice>()
+                .HasData(testPronounChoices);
         }
         #endregion
 
@@ -68,7 +115,10 @@ namespace CC.Data.Identity
         )
 		{
             // Set up Object Shapes and Defaults
-
+            modelBuilder.Entity<Profile>()
+                .HasMany(x => x.Pronouns)
+                .WithOne(x => x.Profile)
+                .HasForeignKey(x => x.ProfileId);
 		}
         #endregion
     }
