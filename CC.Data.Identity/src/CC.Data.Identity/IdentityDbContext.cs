@@ -16,7 +16,7 @@ namespace CC.Data.Identity
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         { }
 
-        public DbSet<Identity> Identities { get; set; }
+        public DbSet<Models.Identity> Identities { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<PronounChoice> PronounChoices { get; set; }
         public DbSet<ProfilePronounChoice> ProfilePronounChoices { get; set; }
@@ -137,7 +137,7 @@ namespace CC.Data.Identity
                 }
             };
 
-            testProfilePronounChoices = new List<ProfilePronounChoice>()
+            var testProfilePronounChoices = new List<ProfilePronounChoice>()
             {
                 new ProfilePronounChoice()
                 {
@@ -179,12 +179,7 @@ namespace CC.Data.Identity
             modelBuilder.Entity<Profile>()
                 .HasOne(x => x.Identity)
                 .WithMany()
-                .HasForeignKey(x => x.ProfileId);
-
-            modelBuilder.Entity<Profile>()
-                .HasMany(x => x.Pronouns)
-                .WithOne(x => x.Profile)
-                .HasForeignKey(x => x.ProfileId);
+                .HasForeignKey(x => x.Id);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(model => model.Pronouns)
@@ -235,7 +230,8 @@ namespace CC.Data.Identity
         public IdentityDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<IdentityDbContext>();
-            builder.UseNpgsql(_connectionString);
+            // builder.UseNpgsql(_connectionString);
+            builder.EnableSensitiveDataLogging();
             return new IdentityDbContext(builder.Options);
         }
     }
