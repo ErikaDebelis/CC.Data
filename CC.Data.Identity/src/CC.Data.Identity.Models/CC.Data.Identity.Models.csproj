@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>0.0</Version>
+        <PackageId>CC.Data.Identity.Models</PackageId>
+        <Authors>Erika Debelis</Authors>
+    </PropertyGroup>
+    <PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="System.Text.Json" Version="9.0.0" />
+        <PackageReference Include="CC.Data.Generics" Version="0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\CC.Data.Basics\src\CC.Data.Basics.csproj" />
+    </ItemGroup>
+</Project>
