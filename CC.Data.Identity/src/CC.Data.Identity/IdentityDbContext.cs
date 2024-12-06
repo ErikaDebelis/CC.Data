@@ -19,6 +19,7 @@ namespace CC.Data.Identity
         public DbSet<Identity> Identities { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<PronounChoice> PronounChoices { get; set; }
+        public DbSet<ProfilePronounChoice> ProfilePronounChoices { get; set; }
 
         private Dictionary<string, Guid> _Ids;
 
@@ -38,6 +39,13 @@ namespace CC.Data.Identity
             _Ids = new Dictionary<string, Guid>()
             {
                 { "IdentityId", Guid.NewGuid() },
+                { "ProfileId", Guid.NewGuid() },
+                { "PronounChoice1Id", Guid.NewGuid() },
+                { "PronounChoice2Id", Guid.NewGuid() },
+                { "PronounChoice3Id", Guid.NewGuid() },
+                { "PronounChoice4Id", Guid.NewGuid() },
+                { "PronounChoice5Id", Guid.NewGuid() },
+                { "PronounChoice6Id", Guid.NewGuid() }
             };
 
             // Create test seed data (for each entity type in the module) initial migration/table generation
@@ -47,10 +55,10 @@ namespace CC.Data.Identity
                 StartDate = DateTime.UtcNow,
                 Enabled = true,
                 Name = "Test Identity",
-                Identifier = "test@test.com",
+                Email = "test@test.com",
                 Password = "hashedPassword",
-                CreatedBy = "Test",
-                ModifiedBy = "Test",
+                CreatedBy = "System",
+                ModifiedBy = "System",
                 CreatedOn = DateTime.UtcNow,
                 ModifiedOn = DateTime.UtcNow
             };
@@ -60,13 +68,13 @@ namespace CC.Data.Identity
                 Id = _Ids["ProfileId"],
                 IdentityId = testIdentity.Id,
                 Name = "Test Profile",
-                FirstName = "Test",
-                MiddleName = "Testing",
-                LastName = "Person",
+                FirstName = "John",
+                MiddleName = "Test",
+                LastName = "Doe",
                 Title = Identity.Models.Title.Dr,
                 Gender = Identity.Models.Gender.Male,
-                CreatedBy = "Test",
-                ModifiedBy = "Test",
+                CreatedBy = "System",
+                ModifiedBy = "System",
                 CreatedOn = DateTime.UtcNow,
                 ModifiedOn = DateTime.UtcNow
             };
@@ -77,8 +85,8 @@ namespace CC.Data.Identity
                 {
                     Id = _Ids["PronounChoice1Id"],
                     Pronoun = Pronoun.He,
-                    CreatedBy = "Test",
-                    ModifiedBy = "Test",
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
                     CreatedOn = DateTime.UtcNow,
                     ModifiedOn = DateTime.UtcNow
                 },
@@ -86,22 +94,75 @@ namespace CC.Data.Identity
                 {
                     Id = _Ids["PronounChoice2Id"],
                     Pronoun = Pronoun.Him,
-                    CreatedBy = "Test",
-                    ModifiedBy = "Test",
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
                     CreatedOn = DateTime.UtcNow,
                     ModifiedOn = DateTime.UtcNow
+                },
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice3Id"],
+                    Pronoun = Pronoun.She,
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                },
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice4Id"],
+                    Pronoun = Pronoun.Her,
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                },
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice5Id"],
+                    Pronoun = Pronoun.They,
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                },
+                new PronounChoice()
+                {
+                    Id = _Ids["PronounChoice6Id"],
+                    Pronoun = Pronoun.Them,
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                }
+            };
+
+            testProfilePronounChoices = new List<ProfilePronounChoice>()
+            {
+                new ProfilePronounChoice()
+                {
+                    ProfileId = _Ids["ProfileId"],
+                    PronounChoiceId = _Ids["PronounChoice1Id"],
+                },
+                new ProfilePronounChoice()
+                {
+                    ProfileId = _Ids["ProfileId"],
+                    PronounChoiceId = _Ids["PronounChoice2Id"],
                 }
             };
 
             // Now seed the data into the database
             modelBuilder.Entity<Models.Identity>()
                 .HasData(testIdentity);
-            
+
             modelBuilder.Entity<Profile>()
                 .HasData(testProfile);
-            
+
             modelBuilder.Entity<PronounChoice>()
                 .HasData(testPronounChoices);
+
+            modelBuilder.Entity<ProfilePronounChoice>()
+                .HasData(testProfilePronounChoices);
         }
         #endregion
 
@@ -116,9 +177,29 @@ namespace CC.Data.Identity
 		{
             // Set up Object Shapes and Defaults
             modelBuilder.Entity<Profile>()
+                .HasOne(x => x.Identity)
+                .WithMany()
+                .HasForeignKey(x => x.ProfileId);
+
+            modelBuilder.Entity<Profile>()
                 .HasMany(x => x.Pronouns)
                 .WithOne(x => x.Profile)
                 .HasForeignKey(x => x.ProfileId);
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(model => model.Pronouns)
+                .WithMany()
+                .UsingEntity<ProfilePronounChoice>(
+                    a => a
+                        .HasOne(pc => pc.PronounChoice)
+                        .WithMany()
+                        .HasForeignKey(x => x.PronounChoiceId),
+                    b => b
+                        .HasOne(p => p.Profile)
+                        .WithMany()
+                        .HasForeignKey(x => x.ProfileId)
+                )
+                .HasKey(x => new { x.PronounChoiceId, x.ProfileId });
 		}
         #endregion
     }
