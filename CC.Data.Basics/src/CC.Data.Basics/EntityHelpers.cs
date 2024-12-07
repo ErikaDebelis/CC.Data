@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+
 using CC.Data.Basics.Models;
 
 namespace CC.Data.Basics

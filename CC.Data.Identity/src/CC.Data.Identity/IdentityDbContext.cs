@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Security.Cryptography;
-
+﻿using CC.Data.Basics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -8,9 +6,6 @@ using CC.Data.Identity.Models;
 
 namespace CC.Data.Identity
 {
-    /// <summary>
-    /// The IdentityDbContext
-    /// </summary>
     public class IdentityDbContext : DbContext
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
@@ -25,7 +20,7 @@ namespace CC.Data.Identity
 
         #region OnModelCreating
         /// <summary>
-        /// OnModelCreating- set up the model relationships for the entities
+        ///
         /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(
@@ -36,6 +31,7 @@ namespace CC.Data.Identity
             SetupModelNavigation(modelBuilder);
 
             // Set up dictionary of model ids for seeding
+            //Todo: changes these to constants rather than new guids
             _Ids = new Dictionary<string, Guid>()
             {
                 { "Identity1Id", Guid.NewGuid() },
@@ -182,6 +178,37 @@ namespace CC.Data.Identity
                 .HasData(testProfilePronounChoices);
         }
         #endregion
+        
+        #region IgnoreTables Helper Method
+        /// <summary>
+        /// IgnoreTables is used to ignore tables that are not needed in the DbContext
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        public static void IgnoreTables(
+            ModelBuilder modelBuilder
+        )
+        {
+
+            modelBuilder.Entity<Identity.Models.Identity>()
+                .ToTable(
+                    nameof(Identity.Models.Identity),
+                    t => t.ExcludeFromMigrations()
+                );
+
+            modelBuilder.Entity<Profile>()
+                .ToTable(
+                    nameof(Profile),
+                    t => t.ExcludeFromMigrations()
+                );
+
+
+            modelBuilder.Entity<PronounChoice>()
+                .ToTable(
+                    nameof(PronounChoice),
+                    t => t.ExcludeFromMigrations()
+                );
+        }
+        #endregion
 
         #region SetupModelNavigation Helper Method
         /// <summary>
@@ -192,6 +219,18 @@ namespace CC.Data.Identity
             ModelBuilder modelBuilder
         )
 		{
+            // create the type variables for the entities
+            var identityModelType = typeof(Models.Identity);
+            var profileType = typeof(Profile);
+            var pronounChoiceType = typeof(PronounChoice);
+
+            // create the entity helper and pass in the model builder and the types and recurse to build the entities
+            var entityHelper = new EntityHelper();
+
+            entityHelper.EntityBuilder(modelBuilder, identityModelType, null);
+            entityHelper.EntityBuilder(modelBuilder, profileType, null);
+            entityHelper.EntityBuilder(modelBuilder, pronounChoiceType, null);
+            
             // Set up Object Shapes and Defaults
             modelBuilder.Entity<Profile>()
                 .HasOne(x => x.Identity)
@@ -247,7 +286,7 @@ namespace CC.Data.Identity
         public IdentityDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<IdentityDbContext>();
-            // builder.UseNpgsql(_connectionString);
+            builder.UseNpgsql(_connectionString);
             builder.EnableSensitiveDataLogging();
             return new IdentityDbContext(builder.Options);
         }
