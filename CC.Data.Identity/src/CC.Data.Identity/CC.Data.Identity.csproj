@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>0.0</Version>
+        <PackageId>CC.Data.Identity</PackageId>
+        <Authors>Erika Debelis</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CC.Data.Identity.Models\CC.Data.Identity.Models.csproj" />
+    </ItemGroup>
+</Project>

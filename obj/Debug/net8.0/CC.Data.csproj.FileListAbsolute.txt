@@ -1,0 +1,6 @@
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.csproj.AssemblyReference.cache
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.AssemblyInfoInputs.cache
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.AssemblyInfo.cs
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.csproj.CoreCompileInputs.cache
+C:\Projects\Portfolio\CC.Data\obj\Debug\net8.0\CC.Data.sourcelink.json
