@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Data.Chat", "CC.Data.Chat\CC.Data.Chat.csproj", "{18D44EB2-5739-4E0F-BC5C-354253E0B438}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CC.Data.Chat.Models", "CC.Data.Chat.Models\CC.Data.Chat.Models.csproj", "{AE79CAF3-D292-4B98-8F61-800695DF7878}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18D44EB2-5739-4E0F-BC5C-354253E0B438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D44EB2-5739-4E0F-BC5C-354253E0B438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D44EB2-5739-4E0F-BC5C-354253E0B438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D44EB2-5739-4E0F-BC5C-354253E0B438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE79CAF3-D292-4B98-8F61-800695DF7878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE79CAF3-D292-4B98-8F61-800695DF7878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE79CAF3-D292-4B98-8F61-800695DF7878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE79CAF3-D292-4B98-8F61-800695DF7878}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50A67405-7E27-4529-BFBE-B143B9AAD69F}
+	EndGlobalSection
+EndGlobal

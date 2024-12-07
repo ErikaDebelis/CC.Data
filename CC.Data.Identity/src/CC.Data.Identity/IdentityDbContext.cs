@@ -38,7 +38,8 @@ namespace CC.Data.Identity
             // Set up dictionary of model ids for seeding
             _Ids = new Dictionary<string, Guid>()
             {
-                { "IdentityId", Guid.NewGuid() },
+                { "Identity1Id", Guid.NewGuid() },
+                { "Identity2Id", Guid.NewGuid() },
                 { "ProfileId", Guid.NewGuid() },
                 { "PronounChoice1Id", Guid.NewGuid() },
                 { "PronounChoice2Id", Guid.NewGuid() },
@@ -49,24 +50,40 @@ namespace CC.Data.Identity
             };
 
             // Create test seed data (for each entity type in the module) initial migration/table generation
-            var testIdentity = new Models.Identity()
+            var testIdentity = new List<Models.Identity>()
             {
-                Id = _Ids["IdentityId"],
-                StartDate = DateTime.UtcNow,
-                Enabled = true,
-                Name = "Test Identity",
-                Email = "test@test.com",
-                Password = "hashedPassword",
-                CreatedBy = "System",
-                ModifiedBy = "System",
-                CreatedOn = DateTime.UtcNow,
-                ModifiedOn = DateTime.UtcNow
+                new Models.Identity()
+                {
+                    Id = _Ids["Identity1Id"],
+                    StartDate = DateTime.UtcNow,
+                    Enabled = true,
+                    Name = "Test Identity 1",
+                    Email = "test@test.com",
+                    Password = "hashedPassword",
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                },
+                new Models.Identity()
+                {
+                    Id = _Ids["Identity2Id"],
+                    StartDate = DateTime.UtcNow,
+                    Enabled = true,
+                    Name = "Test Identity 2",
+                    Email = "anotheremail@test.com",
+                    Password = "hashedPassword",
+                    CreatedBy = "System",
+                    ModifiedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedOn = DateTime.UtcNow
+                }
             };
 
             var testProfile = new Profile()
             {
                 Id = _Ids["ProfileId"],
-                IdentityId = testIdentity.Id,
+                IdentityId = _Ids["Identity1Id"],
                 Name = "Test Profile",
                 FirstName = "John",
                 MiddleName = "Test",
