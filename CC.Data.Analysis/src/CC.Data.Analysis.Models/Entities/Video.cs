@@ -15,10 +15,10 @@ namespace CC.Data.Analysis.Models.Entities
         /// Navigation property
         /// </summary>
         public Guid IdentityId { get; set; }
-        public Identity Identity { get; set; }
+        public Identity.Models.Identity Identity { get; set; }
 
         public Guid ChatId { get; set; }
-        public Chat Chat { get; set; }
+        public Chat.Models.Entities.Chat Chat { get; set; }
 
         public string Title { get; set; }
         public string Description { get; set; }

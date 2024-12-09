@@ -16,7 +16,7 @@ namespace CC.Data.Analysis
 
         public DbSet<Video> Videos { get; set; }
         public DbSet<EnhancedCaption> Captions { get; set; }
-        public DbSet<Analysis> Analyses { get; set; }
+        public DbSet<Models.Entities.Analysis> Analyses { get; set; }
 
         private Dictionary<string, Guid> _Ids;
 
@@ -56,9 +56,9 @@ namespace CC.Data.Analysis
                 }
             };
 
-            var testCaptions = new List<Models.Entities.Caption>()
+            var testCaptions = new List<Models.Entities.EnhancedCaption>()
             {
-                new Models.Entities.Caption()
+                new Models.Entities.EnhancedCaption()
                 {
                     Id = _Ids["CaptionId"],
                     CreatedBy = "Test",
@@ -92,10 +92,10 @@ namespace CC.Data.Analysis
             modelBuilder.Entity<Video>()
                 .HasData(testVideos);
 
-            modelBuilder.Entity<Caption>()
+            modelBuilder.Entity<EnhancedCaption>()
                 .HasData(testCaptions);
 
-            modelBuilder.Entity<Analysis>()
+            modelBuilder.Entity<Models.Entities.Analysis>()
                 .HasData(testAnalyses);
         }
         #endregion
@@ -114,12 +114,12 @@ namespace CC.Data.Analysis
                     nameof(Video),
                     t => t.ExcludeFromMigrations()
                 );
-            modelBuilder.Entity<Caption>()
+            modelBuilder.Entity<EnhancedCaption>()
                 .ToTable(
-                    nameof(Caption),
+                    nameof(EnhancedCaption),
                     t => t.ExcludeFromMigrations()
                 );
-            modelBuilder.Entity<Analysis>()
+            modelBuilder.Entity<Models.Entities.Analysis>()
                 .ToTable(
                     nameof(Models.Entities.Analysis),
                     t => t.ExcludeFromMigrations()
@@ -138,7 +138,7 @@ namespace CC.Data.Analysis
         {
             //create the type variables for the entities
             var videoType = typeof(Models.Entities.Video);
-            var captionType = typeof(Models.Entities.Caption);
+            var captionType = typeof(Models.Entities.EnhancedCaption);
             var analysisModelType = typeof(Models.Entities.Analysis);
 
             //create the entity helper and pass in the model builder and the types and recurse to build the entities
@@ -159,9 +159,9 @@ namespace CC.Data.Analysis
                 .WithOne(a => a.Caption)
                 .HasForeignKey(a => a.CaptionId);
 
-            modelBuilder.Entity<Analysis>()
+            modelBuilder.Entity<Models.Entities.Analysis>()
                 .HasOne(a => a.Video)
-                .WithMany(v => v.Analyses)
+                .WithMany()
                 .HasForeignKey(a => a.VideoId);
         }
         #endregion
