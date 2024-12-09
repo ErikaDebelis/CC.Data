@@ -178,7 +178,7 @@ namespace CC.Data.Identity
                 .HasData(testProfilePronounChoices);
         }
         #endregion
-        
+
         #region IgnoreTables Helper Method
         /// <summary>
         /// IgnoreTables is used to ignore tables that are not needed in the DbContext
@@ -188,7 +188,6 @@ namespace CC.Data.Identity
             ModelBuilder modelBuilder
         )
         {
-
             modelBuilder.Entity<Identity.Models.Identity>()
                 .ToTable(
                     nameof(Identity.Models.Identity),
@@ -200,7 +199,6 @@ namespace CC.Data.Identity
                     nameof(Profile),
                     t => t.ExcludeFromMigrations()
                 );
-
 
             modelBuilder.Entity<PronounChoice>()
                 .ToTable(

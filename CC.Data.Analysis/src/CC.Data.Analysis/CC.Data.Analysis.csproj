@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>0.0</Version>
+        <PackageId>CC.Data.Analysis</PackageId>
+        <Authors>Erika Debelis</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CC.Data.Analysis.Models\CC.Data.Analysis.Models.csproj" />
+        <ProjectReference Include="..\..\CC.Data.Identity\src\CC.Data.Identity\CC.Data.Identity.csproj" />
+        <ProjectReference Include="..\..\CC.Data.Chat\src\CC.Data.Chat\CC.Data.Chat.csproj" />
+    </ItemGroup>
+</Project>

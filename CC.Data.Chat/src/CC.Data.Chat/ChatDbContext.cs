@@ -12,10 +12,10 @@ namespace CC.Data.Chat
     {
         public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options)
         { }
-        
+
         public DbSet<Chat.Models.Entities.Chat> Chats { get; set; }
         public DbSet<Models.Entities.Message> Messages { get; set; }
-        
+
         private Dictionary<string, Guid> _Ids;
 
         #region OnModelCreating

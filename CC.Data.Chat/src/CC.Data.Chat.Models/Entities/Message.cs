@@ -27,6 +27,6 @@ namespace CC.Data.Chat.Models.Entities
         public string Text { get; set; }
 
         public MessageType MessageType { get; set; }
-        public List<MessageMetadata>? Metadata { get; set; }
+        public Dictionary<string, string>? Metadata { get; set; }
     }
 }
